@@ -18,25 +18,21 @@ class AllowMissing(ser.Field):
         super(AllowMissing, self).__init__()
         self.field = field
 
-    # def __init__(self, field):
-    #     super(AllowMissing, self).__init__()
-    #     self.field = field
+    # def bind(self, field_name, parent):
+    #     return self.field.bind(self, field_name, parent)
     #
-    def bind(self, field_name, parent):
-        return self.field.bind(self, field_name, parent)
-
-    def validators(self):
-        return self.field.validators(self)
-
-    def get_validators(self):
-        return self.field.get_validators(self)
-
-    def get_initial(self):
-        return self.field.get_initial(self)
-
-    def get_value(self, dictionary):
-        return self.field.get_value(self)
-
+    # def validators(self):
+    #     return self.field.validators(self)
+    #
+    # def get_validators(self):
+    #     return self.field.get_validators(self)
+    #
+    # def get_initial(self):
+    #     return self.field.get_initial(self)
+    #
+    # def get_value(self, dictionary):
+    #     return self.field.get_value(self)
+    #
     def get_attribute(self, instance):
         """
         Overwrite the error message to return a blank value is if there is no existing value.
@@ -48,38 +44,38 @@ class AllowMissing(ser.Field):
         except SkipField:
             return ''
 
-    def get_default(self):
-        return self.field.get_default(self)
-
-    def validate_empty_values(self, data):
-        return self.field.validate_empty_values(self, data)
-
-    def run_validation(self):
-        return self.field.run_validation(self)
-
-    def run_validators(self, value):
-        return self.field.run_validators(self, value)
-
-    def to_internal_value(self, data):
-        return self.field.to_internal_value(self, data)
-
+    # def get_default(self):
+    #     return self.field.get_default(self)
+    #
+    # def validate_empty_values(self, data):
+    #     return self.field.validate_empty_values(self, data)
+    #
+    # def run_validation(self):
+    #     return self.field.run_validation(self)
+    #
+    # def run_validators(self, value):
+    #     return self.field.run_validators(self, value)
+    #
+    # def to_internal_value(self, data):
+    #     return self.field.to_internal_value(self, data)
+    #
     def to_representation(self, value):
         return self.field.to_representation(self.field.value)
 
-    def fail(self, key, **kwargs):
-        return self.field.fail(key, **kwargs)
-
-    def root(self):
-        return self.field.root()
-
-    def context(self):
-        return self.field.context()
-
+    # def fail(self, key, **kwargs):
+    #     return self.field.fail(key, **kwargs)
+    #
+    # def root(self):
+    #     return self.field.root()
+    #
+    # def context(self):
+    #     return self.field.context()
+    #
     def __deepcopy__(self, memo):
         return self.field.__deepcopy__(memo)
 
-    def __repr__(self):
-        return self.field.__repr__()
+    # def __repr__(self):
+    #     return self.field.__repr__()
 
 
 class CharFieldWithReadDefault(ser.CharField):
@@ -106,6 +102,7 @@ class URLFieldWithReadDefault(ser.URLField):
             return super(URLFieldWithReadDefault, self).get_attribute(instance)
         except SkipField:
             return ''
+
 
 def _rapply(d, func, *args, **kwargs):
     """Apply a function to all values in a dictionary, recursively. Handles lists and dicts currently,
@@ -364,14 +361,12 @@ class JSONAPISerializer(ser.Serializer):
         fields = [field for field in self.fields.values() if not field.write_only]
 
         for field in fields:
-            # if field.source == 'social.github':
-            #     field.source == 'github'
             try:
                 attribute = field.get_attribute(obj)
             except SkipField:
-                if field.source.split('.')[0] == 'social':
-                    attribute = ''
-                else:
+                # if field.source.split('.')[0] == 'social':
+                #     attribute = ''
+                # else:
                     continue
             if isinstance(field, JSONAPIHyperlinkedIdentityField):
                 data['relationships'][field.field_name] = field.to_representation(attribute)
