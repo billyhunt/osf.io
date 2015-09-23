@@ -37,16 +37,16 @@ class AllowMissing(ser.Field):
     def get_value(self, dictionary):
         return self.field.get_value(self)
 
-    # def get_attribute(self, instance):
-    #     """
-    #     Overwrite the error message to return a blank value is if there is no existing value.
-    #     This allows the display of keys that do not exist in the DB (gitHub on a new OSF account for example.)
-    #     """
-    #     try:
-    #         return self.field.get_attribute(instance)
-    #         # return super(AllowMissing, self).__init__(instance)
-    #     except SkipField:
-    #         return ''
+    def get_attribute(self, instance):
+        """
+        Overwrite the error message to return a blank value is if there is no existing value.
+        This allows the display of keys that do not exist in the DB (gitHub on a new OSF account for example.)
+        """
+        try:
+            return self.field.get_attribute(instance)
+            # return super(AllowMissing, self).__init__(instance)
+        except SkipField:
+            return ''
 
     def get_default(self):
         return self.field.get_default(self)
