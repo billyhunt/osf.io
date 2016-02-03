@@ -38,7 +38,7 @@
                         <p>Data stored on the OSF is backed by a $250,000 preservation fund that will provide for persistence of your data, even if the Center for Open Science runs out of funding. The code base for the OSF is entirely <a href="https://github.com/CenterForOpenScience/osf.io">open source</a>, which enables other groups to continue maintaining and expanding it if we aren’t able to.</p>
 
                     <h4 class="m-t-lg f-w-lg">How will the OSF be useful to my research?</h4>
-                        <p>The OSF integrates with the scientist's daily workflow. The OSF helps document and archive study designs, materials, and data. The OSF facilitates sharing of materials and data within a laboratory or across laboratories. The OSF also facilitates transparency of laboratory research and provides a network design that details and credits individual contributions for all aspects of the research process. To see how it works, watch our short <a href="/getting-started">Getting Started</a> videos, see the <a href="/4znZP/wiki/home">OSF Features</a> page, or see how other scientists <a href="/svje2/">use the OSF.</a></p>
+                        <p>The OSF integrates with the scientist's daily workflow. The OSF helps document and archive study designs, materials, and data. The OSF facilitates sharing of materials and data within a laboratory or across laboratories. The OSF also facilitates transparency of laboratory research and provides a network design that details and credits individual contributions for all aspects of the research process. To see how it works, watch our short <a href="/getting-started">Getting Started</a> videos, see the <a href="https://osf.io/4znZP/wiki/home">OSF Features</a> page, or see how other scientists <a href="https://osf.io/svje2/">use the OSF.</a></p>
 
                     <h4 class="m-t-lg f-w-lg">How can I help develop the OSF?</h4>
                         <p>If you are a developer, check out the source code for the OSF <a href="https://github.com/CenterForOpenScience/osf.io">on GitHub</a>.
@@ -78,7 +78,7 @@
                         <p>Registering is an optional feature of the OSF.</p>
 
                     <h4 class="m-t-lg f-w-lg">What is the cap on data per user?</h4>
-                        <p>There is a limit on the size of individual files uploaded to the OSF. This limit is 128 MB. If you have larger files to upload, you might consider utilizing add-ons. When archiving files during the registration process, there is a 1 GB total limit across all storage add-ons being archived.</p>
+                    <p>There is a limit on the size of individual files uploaded to the OSF. This limit is 5 GB. If you have larger files to upload, you might consider utilizing add-ons. When archiving files during the registration process, there is a 1 GB total limit across all storage add-ons being archived.</p>
 
                     <h4 class="m-t-lg f-w-lg">How do I get a DOI or ARK for my project?</h4>
                         <p>DOIs and ARKs are available for <b>public registrations</b> of projects. To get a DOI or ARK for your project, first create a registration of your project, and make sure the registration is public. Then click the "Create DOI / ARK" link, located in the block of text below the project title. A DOI and ARK will be automatically created. </p>
