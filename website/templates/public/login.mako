@@ -2,8 +2,29 @@
 
 <%def name="title()">Sign In</%def>
 
+<%def name="content_wrap()">
+    <div class="watermarked">
+            % if status:
+                <%include file="alert.mako" args="extra_css='alert-front text-center'"/>
+            % endif
+            ${self.content()}
+    </div><!-- end watermarked -->
+</%def>
+
 <%def name="content()">
 
+        <div id="login-hero">
+        <div class="container text-center">
+            <div class="visible-xs-block visible-sm-block visible-md-block network-bg"></div>
+            %if campaign == "institution" and enable_institutions:
+
+            <h1 class="hero-brand">OSF For Institutions</h1>
+            %else:
+            <h1 class="hero-brand">Open Science Framework</h1>
+            %endif
+
+            <h3 class="login-tagline">A scholarly commons to connect the entire research cycle</h3>
+        </div>
 %if campaign == "prereg":
 <div class="text-center m-t-lg">
     <h3>Preregistration Challenge </h3>
@@ -16,15 +37,14 @@
 
 %if campaign == "institution" and enable_institutions:
 <div class="text-center m-t-lg">
-    <h3>OSF for Institutions </h3>
-    <hr>
-    <p>
+    <h4>
       If your institution has partnered with the Open Science Framework, please
         select its name below and sign in with your institutional credentials.
-    </p>
+    </h4>
 </div>
 %endif
 <div class="row m-t-xl">
+
     %if campaign == "institution" and enable_institutions:
     <div class="col-sm-6 col-sm-offset-3 toggle-box toggle-box-active">
         <h3 class="m-b-lg"> Login through institution</h3>
@@ -46,9 +66,67 @@
         </div>
     </div>
     %endif
-    %if campaign != "institution" or not enable_institutions:
-    <div class="col-sm-5 col-sm-offset-1 toggle-box toggle-box-left toggle-box-active p-h-lg">
+      %if campaign == "merge_user":
+    <div class="col-sm-6 col-sm-offset-4 p-h-lg">
+      <h4>Please log in to continue</h4>
         <form
+            id="logInForm"
+            class="form-horizontal"
+            action="${login_url}"
+            method="POST"
+            data-bind="submit: submit"
+        >
+            <div class="form-group">
+                <div class="col-sm-8">
+                    <input
+                        type="email"
+                        class="form-control"
+                        data-bind="value: username"
+                        name="username"
+                        id="inputEmail3"
+                        placeholder="Email"
+                        autofocus
+                    >
+                </div>
+            </div>
+            <div class="form-group">
+                    <div class="col-sm-8">
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword3"
+                        placeholder="Password"
+                        data-bind="value: password"
+                        name="password"
+                    >
+                </div>
+            </div>
+                <div class="col-sm-8">
+            <div class="form-group col-sm-4">
+                    <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                    </div>
+            </div>
+            <div class="form-group col-sm-9">
+                    <button type="submit" class="btn btn-success pull-right">Sign in</button>
+                </div>
+        </form>
+    </div>
+
+    %endif
+
+    %if (campaign != "institution" or not enable_institutions) and campaign != "merge_user":
+
+      <div class="text-center m-t-lg">
+          <h3>Add an email to your account </h3>
+          <hr>
+          <p>
+              Please login to the Open Science Framework or create a free account to continue.
+          </p>
+      </div>
+
+      <div class="col-sm-5 col-sm-offset-1 toggle-box toggle-box-left toggle-box-active p-h-lg">
+          <form
             id="logInForm"
             class="form-horizontal"
             action="${login_url}"
@@ -210,7 +288,10 @@
             </div>
         </form>
     </div>
+
     %endif
+                        </div>
+
 </div>
 
 </%def>
@@ -227,6 +308,7 @@
 
 <%def name="stylesheets()">
     ${parent.stylesheets()}
-
+    <link rel="stylesheet" href="/static/css/pages/home-page.css">
+    <link rel="stylesheet" href="/static/css/front-page.css">
     <link rel="stylesheet" href="/static/css/pages/login-page.css">
 </%def>
