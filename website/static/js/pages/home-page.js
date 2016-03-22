@@ -53,8 +53,8 @@ $(document).ready(function(){
                         m('.row', [
                             m(columnSizeClass, m('.pull-right',
                                 m.component(AddProject, {
-                                    buttonTemplate : m('button.btn.btn-success.m-t-md[data-toggle="modal"][data-target="#addProjectFromHome"]', {onclick: function(){
-                                        $osf.trackClick('quickSearch', 'add-project', 'open-add-project-modal');
+                                    buttonTemplate : m('button.btn.btn-success.m-t-md.btn-new-project.f-w-xl[data-toggle="modal"][data-target="#addProjectFromHome"]', {onclick: function(){
+                                        $osf.trackClick('quickSearch', 'add-project', 'open -add-project-modal');
                                     }}, 'Create New Project'),
                                     modalID : 'addProjectFromHome',
                                     categoryList : ctrl.categoryList,
