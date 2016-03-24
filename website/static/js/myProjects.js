@@ -12,6 +12,11 @@ var LogText = require('js/logTextParser');
 var AddProject = require('js/addProjectPlugin');
 var mC = require('js/mithrilComponents');
 
+//There are three predefined collections.  Bookmarks, All My Projects, and
+//All My Components.  This index shows where to start categorizing the user made
+//collections.
+var PREDEFINED_COLLECTIONS_NUMBER = 3;
+
 var MOBILE_WIDTH = 767; // Mobile view break point for responsiveness
 var NODE_PAGE_SIZE = 10; // Load 10 nodes at a time from server
 
@@ -551,7 +556,11 @@ var MyProjects = {
         self.loadCollections = function _loadCollections (url){
             var promise = m.request({method : 'GET', url : url, config : xhrconfig});
             promise.then(function(result){
-                result.data.forEach(function(node){
+                var sortedResults =  result.data.sort(function(x,y){
+                    return x.attributes.bookmarks ? -1 : y.attributes.bookmarks ? 1 : 0;
+                });
+                sortedResults.forEach(function(node){
+                //sortCollections(result.data).forEach(function(node){
                     var count = node.relationships.linked_nodes.links.related.meta.count;
                     self.collections().push(new LinkObject('collection', { path : 'collections/' + node.id + '/linked_nodes/', query : { 'related_counts' : 'children', 'embed' : 'contributors' }, systemCollection : false, node : node, count : m.prop(count) }, node.attributes.title));
                 });
@@ -599,7 +608,7 @@ var MyProjects = {
             self.loadCategories().then(function(){
                 self.updateList(self.systemCollections[0]);
             });
-            var collectionsUrl = $osf.apiV2Url('collections/', { query : {'related_counts' : 'linked_nodes', 'page[size]' : self.collectionsPageSize(), 'sort' : 'date_created', 'embed' : 'node_links'}});
+            var collectionsUrl = $osf.apiV2Url('collections/', { query : {'related_counts' : 'linked_nodes', 'page[size]' : self.collectionsPageSize(), 'sort' : '-date_modified', 'embed' : 'node_links'}});
             if (!self.viewOnly){
                 self.loadCollections(collectionsUrl);
             }
@@ -779,11 +788,14 @@ var Collections = {
             var promise = m.request({method : 'POST', url : url, config : xhrconfig, data : data});
             promise.then(function(result){
                 var node = result.data;
+                var collections = self.collections();
                 var count = node.relationships.linked_nodes.links.related.meta.count || 0;
-                self.collections().push(new LinkObject('collection', { path : 'collections/' + node.id + '/linked_nodes/', query : { 'related_counts' : 'children' }, systemCollection : false, node : node, count : m.prop(count) }, node.attributes.title));
+                //Place after Bookmarks, Registrations, and Projects
+                collections.splice(PREDEFINED_COLLECTIONS_NUMBER, 0, new LinkObject('collection', { path : 'collections/' + node.id + '/linked_nodes/', query : { 'related_counts' : 'children' }, systemCollection : false, node : node, count : m.prop(count) }, node.attributes.title));
+                self.collections(collections);
                 self.newCollectionName('');
                 self.calculateTotalPages();
-                self.currentPage(self.totalPages()); // Go to last page
+                self.currentPage(1); // Go to first page
                 args.sidebarInit();
             }, function(){
                 var name = self.newCollectionName();
