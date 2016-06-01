@@ -4,11 +4,86 @@
 
 <%def name="content()">
 
-    <div id="logInForm"></div>
-        <div id="signUpScope"></div>
-        <div  id="signInContainer">
+
 <div class="col-sm-6 col-sm-offset-3 existing-user-signin p-b-md m-b-m">
-    <form data-bind="submit: submit" class="form-horizontal">
+
+##         <form
+##             id="logInForm"
+##             class="form-horizontal"
+##             action="${login_url}"
+##             method="POST"
+##             data-bind="submit: submit"
+##         >
+##                 <h3 class=${'m-b-lg' if not existing_user else 'm-b-lg m-l-md'}> Login </h3>
+##             <div class="form-group">
+##                 <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+##                 <div class="col-sm-9">
+##                     <input
+##                         ${'autofocus' if not sign_up and not existing_user else ''}
+##                         type="email"
+##                         class="form-control"
+##                         data-bind="value: username"
+##                         name="username"
+##                         id="inputEmail3"
+##                         placeholder="Email"
+##                     >
+##                 </div>
+##             </div>
+##             <div class="form-group">
+##                 <label for="inputPassword3" class="col-sm-3 control-label">Password</label>
+##                     <div class="col-sm-9">
+##                     <input
+##                         ${'autofocus' if existing_user else ''}
+##                         type="password"
+##                         class="form-control"
+##                         id="inputPassword3"
+##                         placeholder="Password"
+##                         data-bind="value: password"
+##                         name="password"
+##                     >
+##                     </div>
+##                 </div>
+##             %if existing_user:
+##                 <div class="row">
+##                     <div class="col-md-3">
+##                         <div class="form-group">
+##                             <div class="m-l-md checkbox">
+##                                 <label><input type="checkbox"> Remember me</label>
+##                             </div>
+##                         </div>
+##                     </div>
+##                     <div class="col-md-9">
+##                         <div class="form-group existing-user-signin-button">
+##                             <button type="submit" class="btn pull-right btn-success ">Sign in</button>
+##                         </div>
+##                     </div>
+##                 </div>
+##                 <div class="row m-l-xs">
+##                     <a href="/forgotpassword/">Forgot password?</a>
+##                 </div>
+##             %else:
+##             <div class="form-group">
+##                 <div class="col-sm-offset-3 col-sm-9">
+##                     <div class="checkbox">
+##                     <label><input type="checkbox"> Remember me</label>
+##                     </div>
+##                 </div>
+##             </div>
+##             <div class="form-group">
+##                 <div class="col-sm-offset-3 col-sm-9">
+##                     <button type="submit" class="btn btn-success pull-right">Sign in</button>
+##                 </div>
+##             </div>
+##             %endif
+##         </form>
+##     </div>
+##     %if not existing_user:
+##         %if sign_up:
+##             <div id="signUpScope" class="col-sm-5 toggle-box toggle-box-right toggle-box-active p-h-lg" style="height: auto;">
+##         %else:
+##             <div id="signUpScope" class="col-sm-5 toggle-box toggle-box-right toggle-box-muted p-h-lg" style="height: auto;">
+##         %endif
+        <form data-bind="submit: submit" class="form-horizontal">
             <h3 class="m-b-lg"> Create a free account </h3>
                 <div
                     class="form-group"
@@ -114,23 +189,27 @@
             <div class="help-block" >
                 <p data-bind="html: flashMessage, attr: {class: flashMessageClass}"></p>
             </div>
-        </br>
+            <div>
+                <p> By clicking "Create account", you agree to our <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/TERMS_OF_USE.md">Terms</a> and that you have read our <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/PRIVACY_POLICY.md">Privacy Policy</a>, including our information on <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/PRIVACY_POLICY.md#f-cookies">Cookie Use</a>.</p>
+            </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <a href="#" >Already have an account?</a>
-                </div>
-                <div class="col-sm-8">
+                <div class="col-sm-offset-4 col-sm-8">
                     <button type="submit" class="btn pull-right btn-success" data-bind="disable: submitted()">Create account</button>
                 </div>
             </div>
-
         </form>
     </div>
+    %else:
+        <div id="signUpScope"></div>
+    %endif
+        %if redirect_url:
+            <div class="text-center m-b-sm col-sm-12" style="padding-top: 15px"> <a href="${domain}login/?campaign=institution&redirect_url=${redirect_url}">Login through your institution  <i class="fa fa-arrow-right"></i></a></div>
+        %else:
+            <div class="text-center m-b-sm col-sm-12" style="padding-top: 15px"> <a href="${domain}login/?campaign=institution">Login through your institution  <i class="fa fa-arrow-right"></i></a></div>
+        %endif
+    %endif
+</div>
 
-    <div id="termsAndConditions" class="col-sm-6 col-sm-offset-3">
-        <p> By clicking "Create account", you agree to our <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/TERMS_OF_USE.md">Terms</a> and that you have read our <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/PRIVACY_POLICY.md">Privacy Policy</a>, including our information on <a href="https://github.com/CenterForOpenScience/centerforopenscience.org/blob/master/PRIVACY_POLICY.md#f-cookies">Cookie Use</a>.</p>
-    </div>
-    </div>
 </%def>
 
 <%def name="javascript_bottom()">

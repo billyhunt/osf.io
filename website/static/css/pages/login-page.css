@@ -1,6 +1,5 @@
-.toggle-box {
-    height: 320px;
-    border: 1px solid #EEE;
+#signInContainer {
+    height: 600px;
 }
 
 .toggle-box-left {
@@ -37,4 +36,15 @@
 .toggle-box-muted .btn-success {
     background-color: #CCC;
     border-color: #BBB;
+}
+.existing-user-signin {
+    /*height: 320px;*/
+    background-color: #EEE;
+    border-radius: 4px;
+    margin-top: 120px;
+}
+
+#termsAndConditions {
+    margin-top: 25px;
+    margin-bottom: 100px;
 }
